@@ -1,7 +1,8 @@
 const canvas = document.getElementById("myCanvas");
 const c = canvas.getContext("2d");
-var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr")};
-var project = {titleY:0,time:100,key:"right"};
+var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr"),
+              kelp:document.getElementById("kelp")};
+var project = {titleY:0,time:100,key:"right",scene:0};
 var p = {x:100,y:100};
 var pt = {x:100,y:200};
 
@@ -14,6 +15,7 @@ let aKeyPressed = false;
 let dKeyPressed = false;
 let wKeyPressed = false;
 let sKeyPressed = false;
+//Feeeeeesh
 class Fish{
     draw(x,y){
         if(project.key == "right"){
@@ -24,6 +26,7 @@ class Fish{
         }
     }
 }
+//Functions
 function clear(){
     c.fillStyle = "indigo";
     c.fillRect(0,0,720,480);
@@ -130,10 +133,17 @@ function playerMove(){
 const fish = new Fish();
 const fishy = new Fish();
 function redraw(){
-    clear();
-    fish.draw(p.x,p.y);
-    fishy.draw(pt.x,pt.y);
-    ocean();
+    if(project.scene ==1){
+        clear();
+        fish.draw(p.x,p.y);
+        fishy.draw(pt.x,pt.y);
+        ocean();
+    }
+    if(project.scene == 0){
+        clear();
+        c.drawImage(images.kelp,60,280,200,200);
+        ocean();
+    }
 }
 redraw();
 window.main = function (){
