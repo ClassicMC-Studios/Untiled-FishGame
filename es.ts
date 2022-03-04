@@ -6,6 +6,7 @@ class Es{
     }
     end(){
         let run = true;
+        this.clear();
         while(running){
             //This will break the game.
         }
