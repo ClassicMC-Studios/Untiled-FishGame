@@ -40,19 +40,12 @@ class Es{
         c.drawImage(img,x,y,w,h);
         c.globalAlpha = 1;
     }
-    text(text,x,y,color,opacity=false){
-        if(opacity){
-            c.globalAlpha = 0.3;
+    text(text,x,y,color,opacity=1){
+            c.globalAlpha = opacity;
             c.fillStyle = color;
             c.font = 'bold 24px sans serif';
             c.fillText(text,x,y);
             c.globalAlpha = 1;
-        }
-        else{
-            c.fillStyle = color;
-            c.font = 'bold 24px sans serif';
-            c.fillText(text,x,y);
-        }
     }
     checkCollisions(x,y,width,height,xx,yy,ww,hh){
         if(x < xx + ww &&
