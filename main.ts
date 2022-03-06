@@ -1,6 +1,6 @@
 const es = new Es();
 var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr"),
-              kelp:document.getElementById("kelp")};
+              kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy")};
 var p = {x:100,y:100};
 var pt = {x:100,y:150};
 let leftKeyPresed = false;
@@ -12,24 +12,42 @@ let aKeyPressed = false;
 let dKeyPressed = false;
 let wKeyPressed = false;
 let sKeyPressed = false;
-
-var project = {titleY:80,time:0};              
+class Kelp{
+    constructor(x,y,w,h){
+        es.image(kelp,x,y,w,h);
+    }
+}
+var project = {titleY:80,time:0,scene:0};              
 es.background("indigo");       
-function drawPlayer(x,y){       
-    es.image(fish,x,y,150,150);     
+function drawPlayer(x,y,type=1){ 
+    if(type == 1){      
+        es.image(fish,x,y,150,150);     
+    }
+    else{
+        s.image(fishy,x,y,150,150);   
+    }
 }      
 function drawPlayerTwo(x,y){       
-    es.image(fish,x,y,150,150);     
+    es.image(fishy,x,y,150,150);     
 }      
 function drawOcean(){
     es.image(images.ocn,0,project.titleY,720,480,0.4);
     es.rect(0,0,720,480,"#000000",0.5);
 }   
 function redraw(){
-    es.background("indigo"); 
-    drawPlayer(p.x,p.y);
-    drawPlayerTwo(pt.x,pt.y);
-    drawOcean();
+    if(project.scene == 0){
+        es.background("indigo");  
+        new Kelp(80,330,150,150);
+        drawOcean();
+        es.rect(0,0,720,480,"#000000",0.5);
+    }
+    if(project.scene == 1){
+        es.background("indigo"); 
+        drawPlayer(p.x,p.y);
+        drawPlayerTwo(pt.x,pt.y);
+        drawOcean();
+        es.rect(0,0,720,480,"#000000",0.5);
+    }
 }
 //Just a whole buch of garbage to get the movement working correctly
 function keyPressed(evt){
@@ -120,12 +138,20 @@ function playerMove(){
         pt.x += 3;
     }
 }
+document.addEventListener('keydown',function (evt){
+    if(event.keyCode == 32){
+        project.scene ++;
+        redraw();
+    }
+});
 redraw();
 window.main = function (){
     window.requestAnimationFrame(main);
-    document.addEventListener('keydown',keyPressed);
-    document.addEventListener('keyup',keyReleased);
-    playerMove();
+    if(project.scene == 1){
+        document.addEventListener('keydown',keyPressed);
+        document.addEventListener('keyup',keyReleased);
+        playerMove();
+    }
     project.titleY += Math.sin(0+(project.time*-0.5)*0.5);
     project.time += 0.5;
     p.y ++;
