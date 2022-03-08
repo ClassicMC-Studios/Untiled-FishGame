@@ -1,6 +1,6 @@
 const es = new Es();
 var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr"),
-              kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy")};
+              kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy"),t:document.getElementById("t")};
 var p = {x:100,y:100};
 var pt = {x:100,y:150};
 let leftKeyPresed = false;
@@ -33,11 +33,16 @@ function drawPlayerTwo(x,y){
 function drawOcean(){
     es.image(images.ocn,0,project.titleY,720,480,0.4);
     es.rect(0,0,720,480,"#000000",0.5);
+    if(project.scene == 0){
+        es.image(t,190,50,300,150,1);
+    }
 }   
 function redraw(){
     if(project.scene == 0){
         es.background("indigo");  
         new Kelp(80,330,150,150);
+        new Kelp(10,310,170,170)
+        es.text("A game by, ClassicMC",450,460,"skyblue");
         drawOcean();
         es.rect(0,0,720,480,"#000000",0.5);
     }
@@ -138,24 +143,36 @@ function playerMove(){
         pt.x += 3;
     }
 }
+//For scene changes
 document.addEventListener('keydown',function (evt){
     if(event.keyCode == 32){
-        project.scene ++;
-        redraw();
+        if(project.scene == 0){
+            project.scene ++;
+            redraw();
+        }
+    }
+    if(event.keyCode == 191){
+        es.print(p.y+"p1  2p"+pt.y)
     }
 });
 redraw();
+//Main game loop.
 window.main = function (){
     window.requestAnimationFrame(main);
-    if(project.scene == 1){
+    if(project.scene ==1){
         document.addEventListener('keydown',keyPressed);
         document.addEventListener('keyup',keyReleased);
         playerMove();
     }
     project.titleY += Math.sin(0+(project.time*-0.5)*0.5);
     project.time += 0.5;
-    p.y ++;
-    pt.y ++;
+    if(project.scene == 1){
+        p.y ++;
+        pt.y ++;
+    }
     redraw();
+    if(p.y>=437||pt.y>=439){
+        alert("ded");
+    }
 }
 main();
