@@ -12,12 +12,19 @@ let aKeyPressed = false;
 let dKeyPressed = false;
 let wKeyPressed = false;
 let sKeyPressed = false;
+//for mouse click detection
+var square = {
+	x:250,
+	y:350,
+	width:200,
+	heigth:100
+};
 class Kelp{
     constructor(x,y,w,h){
         es.image(kelp,x,y,w,h);
     }
 }
-var project = {titleY:80,time:0,scene:0};              
+var project = {titleY:80,time:0,scene:0,triggered:true};              
 es.background("indigo");       
 function drawPlayer(x,y,type=1){ 
     if(type == 1){      
@@ -155,6 +162,18 @@ document.addEventListener('keydown',function (evt){
         es.print(p.y+"p1  2p"+pt.y)
     }
 });
+//Trying to add mouse stuff
+/*
+function isInside(pos, rect){
+	return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.heigth && pos.y > rect.y
+}
+canvas.addEventListener('click', function(evt) {
+    var mousePos = es.getMousePos(canvas, evt);
+    if (isInside(mousePos,square)) {
+		project.triggered = true;
+    }
+},false);
+*/
 redraw();
 //Main game loop.
 window.main = function (){
@@ -171,8 +190,17 @@ window.main = function (){
         pt.y ++;
     }
     redraw();
+    if(!project.triggered){
+        es.rect(square.x,square.y,square.width,square.heigth,"#00cc00",0.1);
+    }
     if(p.y>=437||pt.y>=439){
         alert("ded");
+        p.x = 100;
+        p.y = 100;
+        pt.x = 100;
+        pt.y = 150;
+        project.scene == -1;
+        redraw();
     }
 }
 main();
