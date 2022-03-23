@@ -22,6 +22,6 @@ Made using plain js and eSharp beta (currently)<br />
 </details>
 </details>
 </details>
-</details>
-##### Made by, ClassicMC
+</details><br />
+<b>Made by, ClassicMC</b>
 
