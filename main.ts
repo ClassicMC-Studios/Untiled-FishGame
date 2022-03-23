@@ -1,16 +1,24 @@
 const es = new Es();
 var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr"),
               kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy"),t:document.getElementById("t"),
-              can:document.getElementById("can")};
+              can:document.getElementById("can"),bag:document.getElementById("bag")};
 var p = {x:100,y:100};
 var pt = {x:100,y:150};
 let kelpPOS = [es.random(720),es.random(720)];
 let canzPOS = [es.random(400)];
+let trashTYPE = es.random(3);
+if(trashTYPE == 0){
+    trashTYPE++;
+}
+if(trashTYPE >= 3){
+    trashTYPE =2;
+}
 let cpx = 700
 let leftKeyPresed = false;
 let rightKeyPressed = false;
 let upKeyPressed = false;
 let downKeyPressed = false;
+let darkMode = false;
 var project = {titleY:80,time:0,scene:0,triggered:true};    
 //Player 2
 let aKeyPressed = false;
@@ -30,6 +38,13 @@ function inter(){
     if(cpx <= -10){
         cpx = 700;
         canzPOS[0] = es.random(400);
+        trashTYPE = es.random(3);
+        if(trashTYPE == 0){
+            trashTYPE++;
+        }
+        if(trashTYPE >= 3){
+            trashTYPE =2;
+        }
     }
 }
 //for mouse click detection
@@ -46,7 +61,12 @@ class Kelp{
 }
 class Canz{
     constructor(x,y){
-        es.image(images.can,x,y,100,100);
+        if(trashTYPE == 1){
+            es.image(images.can,x,y,100,100);
+        }
+        if(trashTYPE == 2){
+            es.image(images.bag,x,y,100,100);
+        }
     }
 }          
 es.background("indigo");       
@@ -68,16 +88,21 @@ function drawOcean(){
         es.image(images.t,190,50,300,150,1);
     }
 }   
+function dark(){
+    if(!darkMode){
+        es.rect(0,0,720,480,"#000000",0.5);
+    }
+}
 function redraw(){
     if(project.scene == 0){
         es.background("indigo");  
         new Kelp(80,330,150,150);
         new Kelp(10,310,170,170);
         new Canz(650,400);
-        es.text("A game by, ClassicMC",230,460,"skyblue",0.3);
+        es.text("A game by, ClassicMC ` for light mode",230,460,"skyblue",0.3);
         es.text("Space to beign",270,430,"skyblue");
         drawOcean();
-        es.rect(0,0,720,480,"#000000",0.5);
+        dark();
     }
     if(project.scene == 1){
         es.background("indigo"); 
@@ -90,7 +115,7 @@ function redraw(){
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
         drawOcean();
-        es.rect(0,0,720,480,"#000000",0.5);
+        dark();
     }
 }
 //Just a whole buch of garbage to get the movement working correctly
@@ -191,7 +216,11 @@ function playerMove(){
 document.addEventListener('keydown',function (evt){
     //Triggered with forward slash
     if(event.keyCode == 191){
+        es.print(trashTYPE)
         es.print(p.x+"p1  2p"+pt.x)
+    }
+    if(event.keyCode == 192){
+        darkMode = true;
     }
 });
 redraw();
