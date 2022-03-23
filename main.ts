@@ -38,7 +38,7 @@ var square = {
 };
 class Kelp{
     constructor(x,y,w,h){
-        es.image(kelp,x,y,w,h);
+        es.image(images.kelp,x,y,w,h);
     }
 }
 class Canz{
@@ -49,20 +49,20 @@ class Canz{
 es.background("indigo");       
 function drawPlayer(x,y,type=1){ 
     if(type == 1){      
-        es.image(fish,x,y,150,150);     
+        es.image(images.fish,x,y,150,150);     
     }
     else{
-        es.image(fishy,x,y,150,150);   
+        es.image(images.fishy,x,y,150,150);   
     }
 }      
 function drawPlayerTwo(x,y){       
-    es.image(fishy,x,y,150,150);     
+    es.image(images.fishy,x,y,150,150);     
 }      
 function drawOcean(){
     es.image(images.ocn,0,project.titleY,720,480,0.4);
     es.rect(0,0,720,480,"#000000",0.5);
     if(project.scene == 0){
-        es.image(t,190,50,300,150,1);
+        es.image(images.t,190,50,300,150,1);
     }
 }   
 function redraw(){
@@ -81,6 +81,7 @@ function redraw(){
         drawPlayerTwo(pt.x,pt.y);
         //es.drawHitbox(cpx+15,canzPOS[0],70,100)
         //es.drawHitbox(p.x+20,p.y+30,110,70);
+        //es.drawHitbox(pt.x+20,pt.y+30,110,70);
         new Kelp(kelpPOS[0],310,170,170);
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
@@ -145,11 +146,11 @@ function keyReleased(evt){
 
 }
 function playerMove(){
-    if(leftKeyPressed == true){
+    if(leftKeyPressed == true&&p.x >= -77){
         p.x -= 3;
         //project.key = "left";
     }
-    if(rightKeyPressed == true){
+    if(rightKeyPressed == true&&p.x <= 631){
         p.x += 3;
         //project.key = "right";
     }
@@ -170,10 +171,10 @@ function playerMove(){
     if(sKeyPressed){
         pt.y += 3;
     }
-    if(aKeyPressed){
+    if(aKeyPressed&&pt.x >= -77){
         pt.x -= 3
     }
-    if(dKeyPressed){
+    if(dKeyPressed&&pt.x <= 631){
         pt.x += 3;
     }
 }
@@ -186,7 +187,7 @@ document.addEventListener('keydown',function (evt){
         }
     }
     if(event.keyCode == 191){
-        es.print(p.y+"p1  2p"+pt.y)
+        es.print(p.x+"p1  2p"+pt.x)
     }
 });
 //Trying to add mouse stuff
@@ -238,7 +239,7 @@ window.main = function (){
         sPressed = false;
         dPressed = false;
     }
-    if(es.checkCollisions(cpx+15,canzPOS[0],70,100,p.x+20,p.y+30,110,70)){
+    if(es.checkCollisions(cpx+15,canzPOS[0],70,100,p.x+20,p.y+30,110,70)||es.checkCollisions(cpx+15,canzPOS[0],70,100,pt.x+20,pt.y+30,110,70)){
         alert("ded");
         p.x = 100;
         p.y = 100;
