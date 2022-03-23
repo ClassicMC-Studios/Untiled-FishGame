@@ -17,6 +17,7 @@ let aKeyPressed = false;
 let dKeyPressed = false;
 let wKeyPressed = false;
 let sKeyPressed = false;
+//Intervals
 let nC = setInterval(inter,1);
 function inter(){
     //Updated
@@ -79,9 +80,9 @@ function redraw(){
         es.background("indigo"); 
         drawPlayer(p.x,p.y);
         drawPlayerTwo(pt.x,pt.y);
-        //es.drawHitbox(cpx+15,canzPOS[0],70,100)
-        //es.drawHitbox(p.x+20,p.y+30,110,70);
-        //es.drawHitbox(pt.x+20,pt.y+30,110,70);
+        es.drawHitbox(cpx+25,canzPOS[0]+10,50,80) 
+        es.drawHitbox(p.x+20,p.y+30,110,70);  
+        es.drawHitbox(pt.x+20,pt.y+30,110,70);
         new Kelp(kelpPOS[0],310,170,170);
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
@@ -148,11 +149,9 @@ function keyReleased(evt){
 function playerMove(){
     if(leftKeyPressed == true&&p.x >= -77){
         p.x -= 3;
-        //project.key = "left";
     }
     if(rightKeyPressed == true&&p.x <= 631){
         p.x += 3;
-        //project.key = "right";
     }
     if(upKeyPressed == true){
         if(p.y >= 73){
@@ -190,18 +189,6 @@ document.addEventListener('keydown',function (evt){
         es.print(p.x+"p1  2p"+pt.x)
     }
 });
-//Trying to add mouse stuff
-/*
-function isInside(pos, rect){
-	return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.heigth && pos.y > rect.y
-}
-canvas.addEventListener('click', function(evt) {
-    var mousePos = es.getMousePos(canvas, evt);
-    if (isInside(mousePos,square)) {
-		project.triggered = true;
-    }
-},false);
-*/
 redraw();
 //Main game loop.
 window.main = function (){
