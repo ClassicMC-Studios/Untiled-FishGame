@@ -17,6 +17,8 @@ let aKeyPressed = false;
 let dKeyPressed = false;
 let wKeyPressed = false;
 let sKeyPressed = false;
+//To correctly start the game
+let spaceKeyPressed = false;
 //Intervals
 let nC = setInterval(inter,1);
 function inter(){
@@ -72,7 +74,8 @@ function redraw(){
         new Kelp(80,330,150,150);
         new Kelp(10,310,170,170);
         new Canz(650,400);
-        es.text("A game by, ClassicMC",450,460,"skyblue");
+        es.text("A game by, ClassicMC",230,460,"skyblue",0.3);
+        es.text("Space to beign",270,430,"skyblue");
         drawOcean();
         es.rect(0,0,720,480,"#000000",0.5);
     }
@@ -80,9 +83,9 @@ function redraw(){
         es.background("indigo"); 
         drawPlayer(p.x,p.y);
         drawPlayerTwo(pt.x,pt.y);
-        es.drawHitbox(cpx+25,canzPOS[0]+10,50,80) 
-        es.drawHitbox(p.x+20,p.y+30,110,70);  
-        es.drawHitbox(pt.x+20,pt.y+30,110,70);
+        //es.drawHitbox(cpx+25,canzPOS[0]+10,50,80) 
+        //es.drawHitbox(p.x+20,p.y+30,110,70);  
+        //es.drawHitbox(pt.x+20,pt.y+30,110,70);
         new Kelp(kelpPOS[0],310,170,170);
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
@@ -92,6 +95,9 @@ function redraw(){
 }
 //Just a whole buch of garbage to get the movement working correctly
 function keyPressed(evt){
+    if(evt.keyCode == 32){
+        spaceKeyPressed = true;
+    }
     if(evt.keyCode == 37){
         leftKeyPressed = true;
     }
@@ -117,9 +123,11 @@ function keyPressed(evt){
     if(evt.keyCode == 68){
         dKeyPressed = true;
     }
-
 }
 function keyReleased(evt){
+    if(evt.keyCode == 32){
+        spaceKeyPressed = false;
+    }
     if(evt.keyCode == 37){
         leftKeyPressed = false;
     }
@@ -144,9 +152,12 @@ function keyReleased(evt){
     if(evt.keyCode == 68){
         dKeyPressed = false;
     }
-
 }
 function playerMove(){
+    if(spaceKeyPressed){
+        project.scene = 1;
+        redraw();
+    }
     if(leftKeyPressed == true&&p.x >= -77){
         p.x -= 3;
     }
@@ -177,27 +188,16 @@ function playerMove(){
         pt.x += 3;
     }
 }
-//For scene changes
 document.addEventListener('keydown',function (evt){
-    if(event.keyCode == 32){
-        if(project.scene == 0){
-            project.scene ++;
-            redraw();
-        }
-    }
+    //Triggered with forward slash
     if(event.keyCode == 191){
         es.print(p.x+"p1  2p"+pt.x)
     }
 });
 redraw();
-//Main game loop.
+//Main game loop
 window.main = function (){
     window.requestAnimationFrame(main);
-    if(project.scene ==1){
-        document.addEventListener('keydown',keyPressed);
-        document.addEventListener('keyup',keyReleased);
-        playerMove();
-    }
     project.titleY += Math.sin(0+(project.time*-0.5)*0.5);
     project.time += 0.5;
     if(project.scene == 1){
@@ -246,5 +246,9 @@ window.main = function (){
         sPressed = false;
         dPressed = false;
     }
+    redraw();
+    document.addEventListener('keydown',keyPressed);
+    document.addEventListener('keyup',keyReleased);
+    playerMove();
 }
 main();
