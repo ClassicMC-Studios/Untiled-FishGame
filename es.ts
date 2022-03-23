@@ -20,7 +20,7 @@ class Es{
         c.fillRect(x,y,w,h);
         c.globalAlpha = 1;
     }
-    ellipse(x,y,rad,color,opacity =1){
+    eclipse(x,y,rad,color,opacity =1){
         c.globalAlpha = opacity;
         c.beginPath();
         c.arc(x,y,rad,0,Math.PI *2,);
@@ -76,12 +76,10 @@ class Es{
             y: event.clientY - rect.top
         };
     }
-    chooseRandom(x,y,z,d){
-        let choosed = this.random(5);
-        if(choosed == 0){choosed++;}
-        if(choosed == 1){return x;}
-        if(choosed == 2){return y;}
-        if(choosed == 3){return z;}
-        if(choosed == 4){return d;}
+    drawHitbox(x,y,w,h){
+        c.globalAlpha = 0.3;
+        c.fillStyle = "white";
+        c.fillRect(x,y,w,h);
+        c.globalAlpha = 1;
     }
 }
