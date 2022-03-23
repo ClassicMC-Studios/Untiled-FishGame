@@ -1,17 +1,34 @@
 const es = new Es();
 var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr"),
-              kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy"),t:document.getElementById("t")};
+              kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy"),t:document.getElementById("t"),
+              can:document.getElementById("can")};
 var p = {x:100,y:100};
 var pt = {x:100,y:150};
+let kelpPOS = [es.random(720),es.random(720)];
+let canzPOS = [es.random(400)];
+let cpx = 700
 let leftKeyPresed = false;
 let rightKeyPressed = false;
 let upKeyPressed = false;
 let downKeyPressed = false;
+var project = {titleY:80,time:0,scene:0,triggered:true};    
 //Player 2
 let aKeyPressed = false;
 let dKeyPressed = false;
 let wKeyPressed = false;
 let sKeyPressed = false;
+let nC = setInterval(inter,1);
+function inter(){
+    //Updated
+    if(project.scene == 1){
+        //New Canz
+        cpx--;
+    }
+    if(cpx <= -10){
+        cpx = 700;
+        canzPOS[0] = es.random(400);
+    }
+}
 //for mouse click detection
 var square = {
 	x:250,
@@ -24,14 +41,18 @@ class Kelp{
         es.image(kelp,x,y,w,h);
     }
 }
-var project = {titleY:80,time:0,scene:0,triggered:true};              
+class Canz{
+    constructor(x,y){
+        es.image(images.can,x,y,100,100);
+    }
+}          
 es.background("indigo");       
 function drawPlayer(x,y,type=1){ 
     if(type == 1){      
         es.image(fish,x,y,150,150);     
     }
     else{
-        s.image(fishy,x,y,150,150);   
+        es.image(fishy,x,y,150,150);   
     }
 }      
 function drawPlayerTwo(x,y){       
@@ -48,7 +69,8 @@ function redraw(){
     if(project.scene == 0){
         es.background("indigo");  
         new Kelp(80,330,150,150);
-        new Kelp(10,310,170,170)
+        new Kelp(10,310,170,170);
+        new Canz(650,400);
         es.text("A game by, ClassicMC",450,460,"skyblue");
         drawOcean();
         es.rect(0,0,720,480,"#000000",0.5);
@@ -57,6 +79,11 @@ function redraw(){
         es.background("indigo"); 
         drawPlayer(p.x,p.y);
         drawPlayerTwo(pt.x,pt.y);
+        //es.drawHitbox(cpx+15,canzPOS[0],70,100)
+        //es.drawHitbox(p.x+20,p.y+30,110,70);
+        new Kelp(kelpPOS[0],310,170,170);
+        new Kelp(kelpPOS[1],330,150,150);
+        new Canz(cpx,canzPOS[0]);
         drawOcean();
         es.rect(0,0,720,480,"#000000",0.5);
     }
@@ -201,6 +228,35 @@ window.main = function (){
         pt.y = 150;
         project.scene == -1;
         redraw();
+        //Prevent Held Keys
+        leftKeyPresed = false;
+        rightKeyPressed = false;
+        upKeyPressed = false;
+        downKeyPressed = false;
+        wKeyPresed = false;
+        aKeyPressed = false;
+        sPressed = false;
+        dPressed = false;
+    }
+    if(es.checkCollisions(cpx+15,canzPOS[0],70,100,p.x+20,p.y+30,110,70)){
+        alert("ded");
+        p.x = 100;
+        p.y = 100;
+        pt.x = 100;
+        pt.y = 150;
+        cpx = 700;
+        canzPOS[0] = es.random(400);
+        project.scene == -1;
+        redraw();
+        //Prevent Held Keys
+        leftKeyPresed = false;
+        rightKeyPressed = false;
+        upKeyPressed = false;
+        downKeyPressed = false;
+        wKeyPresed = false;
+        aKeyPressed = false;
+        sPressed = false;
+        dPressed = false;
     }
 }
 main();
