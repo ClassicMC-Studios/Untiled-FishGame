@@ -226,7 +226,7 @@ window.main = function (){
         sPressed = false;
         dPressed = false;
     }
-    if(es.checkCollisions(cpx+15,canzPOS[0],70,100,p.x+20,p.y+30,110,70)||es.checkCollisions(cpx+15,canzPOS[0],70,100,pt.x+20,pt.y+30,110,70)){
+    if(es.checkCollisions(cpx+25,canzPOS[0]+10,50,80,p.x+20,p.y+30,110,70)||es.checkCollisions(cpx+25,canzPOS[0]+10,50,80,pt.x+20,pt.y+30,110,70)){
         alert("ded");
         p.x = 100;
         p.y = 100;
