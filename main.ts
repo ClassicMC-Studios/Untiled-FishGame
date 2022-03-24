@@ -2,10 +2,11 @@ const es = new Es();
 var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr"),
               kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy"),t:document.getElementById("t"),
               can:document.getElementById("can"),bag:document.getElementById("bag"),lc:document.getElementById("lc")};
-var p = {x:100,y:100};
-var pt = {x:100,y:150};
+var p = {x:250,y:100};
+var pt = {x:250,y:150};
 let kelpPOS = [es.random(720),es.random(720)];
 let canzPOS = [es.random(400)];
+let canzPOST = [es.random(400)];
 let trashTYPE = es.random(3);
 //To let trash type be a 2 or a 1 only
 if(trashTYPE == 0){
@@ -15,6 +16,7 @@ if(trashTYPE >= 3){
     trashTYPE =2;
 }
 let cpx = 700
+let cpxl = -100;
 let leftKeyPresed = false;
 let rightKeyPressed = false;
 let upKeyPressed = false;
@@ -36,10 +38,22 @@ function inter(){
     if(project.scene == 1){
         //New Canz
         cpx--;
+        cpxl ++;
     }
     if(cpx <= -10){
         cpx = 700;
         canzPOS[0] = es.random(400);
+        trashTYPE = es.random(3);
+        if(trashTYPE == 0){
+            trashTYPE++;
+        }
+        if(trashTYPE >= 3){
+            trashTYPE =2;
+        }
+    }
+    if(cpxl >= 710){
+        cpxl = 0;
+        canzPOST[0] = es.random(400);
         trashTYPE = es.random(3);
         if(trashTYPE == 0){
             trashTYPE++;
@@ -62,6 +76,16 @@ class Kelp{
     }
 }
 class Canz{
+    constructor(x,y){
+        if(trashTYPE == 1){
+            es.image(images.can,x,y,100,100);
+        }
+        if(trashTYPE == 2){
+            es.image(images.bag,x,y,100,100);
+        }
+    }
+}
+class Canzl{
     constructor(x,y){
         if(trashTYPE == 1){
             es.image(images.can,x,y,100,100);
@@ -102,6 +126,7 @@ function dark(){
 function drawHBS(){
     if(hitboxQ){
         es.drawHitbox(cpx+25,canzPOS[0]+10,50,80);
+        es.drawHitbox(cpxl+25,canzPOST[0]+10,50,80);
         es.drawHitbox(p.x+20,p.y+30,110,70);  
         es.drawHitbox(pt.x+20,pt.y+30,110,70);
     }
@@ -131,6 +156,7 @@ function redraw(){
         new Kelp(kelpPOS[0],310,170,170);
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
+        new Canz(cpxl,canzPOST[0]);
         drawOcean();
         dark();
     }
@@ -266,7 +292,6 @@ window.main = function (){
         es.rect(square.x,square.y,square.width,square.heigth,"#00cc00",0.1);
     }
     if(p.y>=437||pt.y>=439){
-        alert("ded");
         p.x = 100;
         p.y = 100;
         pt.x = 100;
@@ -284,13 +309,35 @@ window.main = function (){
         dPressed = false;
     }
     if(es.checkCollisions(cpx+25,canzPOS[0]+10,50,80,p.x+20,p.y+30,110,70)||es.checkCollisions(cpx+25,canzPOS[0]+10,50,80,pt.x+20,pt.y+30,110,70)){
-        alert("ded");
-        p.x = 100;
+        p.x = 250;
         p.y = 100;
-        pt.x = 100;
+        pt.x = 250;
         pt.y = 150;
         cpx = 700;
+        cpxl = 700;
         canzPOS[0] = es.random(400);
+        canzPOST[0] = es.random(400);
+        project.scene == -1;
+        redraw();
+        //Prevent Held Keys
+        leftKeyPresed = false;
+        rightKeyPressed = false;
+        upKeyPressed = false;
+        downKeyPressed = false;
+        wKeyPresed = false;
+        aKeyPressed = false;
+        sPressed = false;
+        dPressed = false;
+    }
+    if(es.checkCollisions(cpxl+25,canzPOST[0]+10,50,80,p.x+20,p.y+30,110,70)||es.checkCollisions(cpxl+25,canzPOST[0]+10,50,80,pt.x+20,pt.y+30,110,70)){
+        p.x = 250;
+        p.y = 100;
+        pt.x = 250;
+        pt.y = 150;
+        cpx = 700;
+        cpxl = 700;
+        canzPOS[0] = es.random(400);
+        canzPOST[0] = es.random(400);
         project.scene == -1;
         redraw();
         //Prevent Held Keys
