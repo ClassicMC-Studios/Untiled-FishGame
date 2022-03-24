@@ -7,6 +7,7 @@ var pt = {x:100,y:150};
 let kelpPOS = [es.random(720),es.random(720)];
 let canzPOS = [es.random(400)];
 let trashTYPE = es.random(3);
+//To let trash type be a 2 or a 1 only
 if(trashTYPE == 0){
     trashTYPE++;
 }
@@ -92,6 +93,9 @@ function dark(){
     if(!darkMode){
         es.rect(0,0,720,480,"#000000",0.5);
     }
+    else{
+        document.body.style.background = "white";
+    }
 }
 function redraw(){
     if(project.scene == 0){
@@ -99,7 +103,7 @@ function redraw(){
         new Kelp(80,330,150,150);
         new Kelp(10,310,170,170);
         new Canz(650,400);
-        es.text("A game by, ClassicMC ` for light mode",230,460,"skyblue",0.3);
+        es.text("A game by,ClassicMC alt for light mode",230,460,"skyblue",0.3);
         es.text("Space to beign",270,430,"skyblue");
         drawOcean();
         dark();
@@ -219,7 +223,7 @@ document.addEventListener('keydown',function (evt){
         es.print(trashTYPE)
         es.print(p.x+"p1  2p"+pt.x)
     }
-    if(event.keyCode == 192){
+    if(event.keyCode == 18){
         darkMode = true;
     }
 });
