@@ -70,6 +70,28 @@ function inter(){
 function sinter(){
     project.scene = 0;
 }
+function deadQ(){
+    p.x = 250;
+    p.y = 100;
+    pt.x = 250;
+    pt.y = 150;
+    cpx = 700;
+    cpxl = 700;
+    canzPOS[0] = es.random(400);
+    canzPOST[0] = es.random(400);
+    project.scene == -1;
+    redraw();
+    //Prevent Held Keys
+    leftKeyPresed = false;
+    rightKeyPressed = false;
+    upKeyPressed = false;
+    downKeyPressed = false;
+    wKeyPresed = false;
+    aKeyPressed = false;
+    sPressed = false;
+    dPressed = false;
+    project.speed = 1;
+}
 //for mouse click detection
 var square = {
 	x:250,
@@ -146,8 +168,6 @@ function drawPL(x,y,w,h,opc){
 function redraw(){
     if(project.scene == -1){
         es.background("indigo");  
-        new Kelp(80,330,150,150);
-        new Kelp(10,310,170,170);
         drawPL(100,100,500,300,0.3);
         es.text("ClassicMC",290,250,"lightgreen");
         es.image(images.ocn,0,80,720,480,0.4);
@@ -310,63 +330,13 @@ window.main = function (){
         es.rect(square.x,square.y,square.width,square.heigth,"#00cc00",0.1);
     }
     if(p.y>=437||pt.y>=439){
-        p.x = 100;
-        p.y = 100;
-        pt.x = 100;
-        pt.y = 150;
-        project.scene == -1;
-        redraw();
-        //Prevent Held Keys
-        leftKeyPresed = false;
-        rightKeyPressed = false;
-        upKeyPressed = false;
-        downKeyPressed = false;
-        wKeyPresed = false;
-        aKeyPressed = false;
-        sPressed = false;
-        dPressed = false;
+        deadQ();
     }
     if(es.checkCollisions(cpx+25,canzPOS[0]+10,50,80,p.x+20,p.y+30,110,70)||es.checkCollisions(cpx+25,canzPOS[0]+10,50,80,pt.x+20,pt.y+30,110,70)){
-        p.x = 250;
-        p.y = 100;
-        pt.x = 250;
-        pt.y = 150;
-        cpx = 700;
-        cpxl = 700;
-        canzPOS[0] = es.random(400);
-        canzPOST[0] = es.random(400);
-        project.scene == -1;
-        redraw();
-        //Prevent Held Keys
-        leftKeyPresed = false;
-        rightKeyPressed = false;
-        upKeyPressed = false;
-        downKeyPressed = false;
-        wKeyPresed = false;
-        aKeyPressed = false;
-        sPressed = false;
-        dPressed = false;
+        deadQ();
     }
     if(es.checkCollisions(cpxl+25,canzPOST[0]+10,50,80,p.x+20,p.y+30,110,70)||es.checkCollisions(cpxl+25,canzPOST[0]+10,50,80,pt.x+20,pt.y+30,110,70)){
-        p.x = 250;
-        p.y = 100;
-        pt.x = 250;
-        pt.y = 150;
-        cpx = 700;
-        cpxl = 700;
-        canzPOS[0] = es.random(400);
-        canzPOST[0] = es.random(400);
-        project.scene == -1;
-        redraw();
-        //Prevent Held Keys
-        leftKeyPresed = false;
-        rightKeyPressed = false;
-        upKeyPressed = false;
-        downKeyPressed = false;
-        wKeyPresed = false;
-        aKeyPressed = false;
-        sPressed = false;
-        dPressed = false;
+        deadQ();
     }
     redraw();
     document.addEventListener('keydown',keyPressed);
