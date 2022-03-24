@@ -1,7 +1,7 @@
 const es = new Es();
 var images = {fish:document.getElementById("fish"),ocn:document.getElementById("ocn"),fr:document.getElementById("fr"),
               kelp:document.getElementById("kelp"),fishy:document.getElementById("fishy"),t:document.getElementById("t"),
-              can:document.getElementById("can"),bag:document.getElementById("bag")};
+              can:document.getElementById("can"),bag:document.getElementById("bag"),lc:document.getElementById("lc")};
 var p = {x:100,y:100};
 var pt = {x:100,y:150};
 let kelpPOS = [es.random(720),es.random(720)];
@@ -20,6 +20,7 @@ let rightKeyPressed = false;
 let upKeyPressed = false;
 let downKeyPressed = false;
 let darkMode = false;
+let hitboxQ = false;
 var project = {titleY:80,time:0,scene:0,triggered:true};    
 //Player 2
 let aKeyPressed = false;
@@ -92,10 +93,23 @@ function drawOcean(){
 function dark(){
     if(!darkMode){
         es.rect(0,0,720,480,"#000000",0.5);
+        document.body.style.background = "black";
     }
     else{
         document.body.style.background = "white";
     }
+}
+function drawHBS(){
+    if(hitboxQ){
+        es.drawHitbox(cpx+25,canzPOS[0]+10,50,80);
+        es.drawHitbox(p.x+20,p.y+30,110,70);  
+        es.drawHitbox(pt.x+20,pt.y+30,110,70);
+    }
+}
+function drawPL(x,y,w,h,opc){
+    c.globalAlpha = opc;
+    c.drawImage(images.lc,x,y,w,h);
+    c.globalAlpha = 1;
 }
 function redraw(){
     if(project.scene == 0){
@@ -103,6 +117,7 @@ function redraw(){
         new Kelp(80,330,150,150);
         new Kelp(10,310,170,170);
         new Canz(650,400);
+        drawPL(100,0,500,300,1);
         es.text("A game by,ClassicMC alt for light mode",230,460,"skyblue",0.3);
         es.text("Space to beign",270,430,"skyblue");
         drawOcean();
@@ -112,9 +127,7 @@ function redraw(){
         es.background("indigo"); 
         drawPlayer(p.x,p.y);
         drawPlayerTwo(pt.x,pt.y);
-        //es.drawHitbox(cpx+25,canzPOS[0]+10,50,80) 
-        //es.drawHitbox(p.x+20,p.y+30,110,70);  
-        //es.drawHitbox(pt.x+20,pt.y+30,110,70);
+        drawHBS();
         new Kelp(kelpPOS[0],310,170,170);
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
@@ -220,11 +233,22 @@ function playerMove(){
 document.addEventListener('keydown',function (evt){
     //Triggered with forward slash
     if(event.keyCode == 191){
-        es.print(trashTYPE)
-        es.print(p.x+"p1  2p"+pt.x)
+        //es.print(trashTYPE)
+        //es.print(p.x+"p1  2p"+pt.x)
+        if(!hitboxQ){
+            hitboxQ = true;
+        }
+        else{
+            hitboxQ = false;
+        }
     }
     if(event.keyCode == 18){
-        darkMode = true;
+        if(!darkMode){
+            darkMode = true;
+        }
+        else{
+            darkMode = false;
+        }
     }
 });
 redraw();
