@@ -23,7 +23,7 @@ let upKeyPressed = false;
 let downKeyPressed = false;
 let darkMode = false;
 let hitboxQ = false;
-var project = {titleY:80,time:0,scene:-1,triggered:true};    
+var project = {titleY:80,time:0,scene:-1,triggered:true,speed:1};    
 //Player 2
 let aKeyPressed = false;
 let dKeyPressed = false;
@@ -38,8 +38,8 @@ function inter(){
     //Updated
     if(project.scene == 1){
         //New Canz
-        cpx--;
-        cpxl ++;
+        cpx-=project.speed;
+        cpxl +=project.speed;
     }
     if(cpx <= -10){
         cpx = 700;
@@ -62,6 +62,9 @@ function inter(){
         if(trashTYPE >= 3){
             trashTYPE =2;
         }
+    }
+    if(project.speed <= 5){
+        project.speed += 0.000001;
     }
 }
 function sinter(){
@@ -238,8 +241,9 @@ function keyReleased(evt){
     }
 }
 function playerMove(){
-    if(spaceKeyPressed){
+    if(spaceKeyPressed && project.scene == 0){
         project.scene = 1;
+        project.speed = 1;
         redraw();
     }
     if(leftKeyPressed == true&&p.x >= -77){
@@ -275,8 +279,6 @@ function playerMove(){
 document.addEventListener('keydown',function (evt){
     //Triggered with forward slash
     if(event.keyCode == 191){
-        //es.print(trashTYPE)
-        //es.print(p.x+"p1  2p"+pt.x)
         if(!hitboxQ){
             hitboxQ = true;
         }
