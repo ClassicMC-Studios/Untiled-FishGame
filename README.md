@@ -1,6 +1,8 @@
 # Untiled-FishGame
 A game about fish that I'm making for my friend. <br />
 Made using plain js and eSharp beta (currently)<br />
+## Latest addition
+Point ighting<br/>
 <details>
   <summary>idk</summary>
   <details>
