@@ -23,7 +23,7 @@ let upKeyPressed = false;
 let downKeyPressed = false;
 let darkMode = false;
 let hitboxQ = false;
-var project = {titleY:80,time:0,scene:0,triggered:true};    
+var project = {titleY:80,time:0,scene:-1,triggered:true};    
 //Player 2
 let aKeyPressed = false;
 let dKeyPressed = false;
@@ -33,6 +33,7 @@ let sKeyPressed = false;
 let spaceKeyPressed = false;
 //Intervals
 let nC = setInterval(inter,1);
+let startNc = setTimeout(sinter, 1000);
 function inter(){
     //Updated
     if(project.scene == 1){
@@ -62,6 +63,9 @@ function inter(){
             trashTYPE =2;
         }
     }
+}
+function sinter(){
+    project.scene = 0;
 }
 //for mouse click detection
 var square = {
@@ -137,6 +141,16 @@ function drawPL(x,y,w,h,opc){
     c.globalAlpha = 1;
 }
 function redraw(){
+    if(project.scene == -1){
+        es.background("indigo");  
+        new Kelp(80,330,150,150);
+        new Kelp(10,310,170,170);
+        drawPL(100,100,500,300,0.3);
+        es.text("ClassicMC",290,250,"lightgreen");
+        es.image(images.ocn,0,80,720,480,0.4);
+        es.rect(0,0,720,480,"#000000",0.5);
+        dark();
+    }
     if(project.scene == 0){
         es.background("indigo");  
         new Kelp(80,330,150,150);
@@ -153,6 +167,8 @@ function redraw(){
         drawPlayer(p.x,p.y);
         drawPlayerTwo(pt.x,pt.y);
         drawHBS();
+        drawPL(kelpPOS[1],330,150,150,0.5);
+        drawPL(kelpPOS[0],310,170,170,0.5);
         new Kelp(kelpPOS[0],310,170,170);
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
