@@ -8,6 +8,7 @@ let kelpPOS = [es.random(720),es.random(720)];
 let canzPOS = [es.random(400)];
 let canzPOST = [es.random(400)];
 let trashTYPE = es.random(3);
+let trashTYPEl = es.random(3);
 //To let trash type be a 2 or a 1 only
 if(trashTYPE == 0){
     trashTYPE++;
@@ -15,13 +16,19 @@ if(trashTYPE == 0){
 if(trashTYPE >= 3){
     trashTYPE =2;
 }
+if(trashTYPEl == 0){
+    trashTYPEl++;
+}
+if(trashTYPEl >= 3){
+    trashTYPEl =2;
+}
 let cpx = 700
 let cpxl = -100;
 let leftKeyPresed = false;
 let rightKeyPressed = false;
 let upKeyPressed = false;
 let downKeyPressed = false;
-let darkMode = false;
+let darkMode = true;
 let hitboxQ = false;
 var project = {titleY:80,time:0,scene:-1,triggered:true,speed:1};    
 //Player 2
@@ -55,16 +62,16 @@ function inter(){
     if(cpxl >= 710){
         cpxl = 0;
         canzPOST[0] = es.random(400);
-        trashTYPE = es.random(3);
-        if(trashTYPE == 0){
-            trashTYPE++;
+        trashTYPEl = es.random(3);
+        if(trashTYPEl == 0){
+            trashTYPEl++;
         }
-        if(trashTYPE >= 3){
-            trashTYPE =2;
+        if(trashTYPEl >= 3){
+            trashTYPEl =2;
         }
     }
     if(project.speed <= 5){
-        project.speed += 0.000001;
+        project.speed += 0.00001;
     }
 }
 function sinter(){
@@ -116,10 +123,10 @@ class Canz{
 }
 class Canzl{
     constructor(x,y){
-        if(trashTYPE == 1){
+        if(trashTYPEl == 1){
             es.image(images.can,x,y,100,100);
         }
-        if(trashTYPE == 2){
+        if(trashTYPEl == 2){
             es.image(images.bag,x,y,100,100);
         }
     }
@@ -149,7 +156,7 @@ function dark(){
         document.body.style.background = "black";
     }
     else{
-        document.body.style.background = "white";
+        //document.body.style.background = "white";
     }
 }
 function drawHBS(){
@@ -180,7 +187,7 @@ function redraw(){
         new Kelp(10,310,170,170);
         new Canz(650,400);
         drawPL(100,0,500,300,1);
-        es.text("A game by,ClassicMC alt for light mode",230,460,"skyblue",0.3);
+        es.text("A game by,ClassicMC alt for dark mode",230,460,"skyblue",0.3);
         es.text("Space to beign",270,430,"skyblue");
         drawOcean();
         dark();
@@ -195,7 +202,7 @@ function redraw(){
         new Kelp(kelpPOS[0],310,170,170);
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
-        new Canz(cpxl,canzPOST[0]);
+        new Canzl(cpxl,canzPOST[0]);
         drawOcean();
         dark();
     }
