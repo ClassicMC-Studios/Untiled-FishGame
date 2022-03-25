@@ -30,7 +30,7 @@ let upKeyPressed = false;
 let downKeyPressed = false;
 let darkMode = true;
 let hitboxQ = false;
-var project = {titleY:80,time:0,scene:-1,triggered:true,speed:1};    
+var project = {titleY:80,time:0,scene:-1,triggered:true,speed:1,deaths:0};    
 //Player 2
 let aKeyPressed = false;
 let dKeyPressed = false;
@@ -70,8 +70,8 @@ function inter(){
             trashTYPEl =2;
         }
     }
-    if(project.speed <= 5){
-        project.speed += 0.00001;
+    if(project.speed <= 10){
+        project.speed += 0.0001;
     }
 }
 function sinter(){
@@ -98,6 +98,7 @@ function deadQ(){
     sPressed = false;
     dPressed = false;
     project.speed = 1;
+    project.deaths ++;
 }
 //for mouse click detection
 var square = {
@@ -203,6 +204,7 @@ function redraw(){
         new Kelp(kelpPOS[1],330,150,150);
         new Canz(cpx,canzPOS[0]);
         new Canzl(cpxl,canzPOST[0]);
+        es.text("Deaths:"+project.deaths,590,40,"skyblue",0.5)
         drawOcean();
         dark();
     }
