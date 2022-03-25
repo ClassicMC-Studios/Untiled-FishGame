@@ -353,3 +353,6 @@ window.main = function (){
     playerMove();
 }
 main();
+function update(){
+    //Built in update function (Not being used)
+}
