@@ -1,6 +1,7 @@
 const canvas = document.getElementById("myCanvas");
 const c = canvas.getContext("2d");
 class Es{
+    test = setInterval(update,13);
     random(max) {
         return Math.floor(Math.random() * max);
     }
