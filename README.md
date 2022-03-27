@@ -20,7 +20,7 @@ Difficulty Curve added<br/>
   <summary>idk</summary>
               <ul><li>Idk</li></ul>
 </details>
-</details>
+          </details>
 </details>
 </details>
 </details>
