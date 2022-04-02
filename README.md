@@ -1,6 +1,6 @@
 <img src ="images/title.png" width = "360" height = "200"><br/>
 A game about fish that I'm making for my friend. <br />
-Made using plain js and a slightly modifed eSharp beta (currently)<br />
+Made using plain js and a slightly modifed eSharp beta (currently)<br/>
 Now renders better on Safari <br />
 ## Latest addition
 Difficulty Curve added<br/>
